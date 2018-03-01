@@ -1,36 +1,34 @@
 function giphyURLWithSearchTerm(searchTerm) {
     // write a function that will return a url for the giphy API with
-    var firstPart = "api.giphy.com/v1/stickers/search?q=" + searchTerm;
-    var secondPart = "&api_key=dc6zaTOxFJmzC";
-    var newURL = firstPart + secondPart;
     // the searchTerm provided in the parameters
-    console.log(newURL);
-    
+    var newURL = "https://api.giphy.com/v1/stickers/search?q=" + searchTerm + "&api_key=dc6zaTOxFJmzC";
+    return newURL;
 }
-
-giphyURLWithSearchTerm("food");
 
 function appendImageToBody(srcURL) {
     // write a function that will append an <img> to the body with the
-    $("body").append(<>);
     // URL provided in the parameters
-    
+    $('body').append('<img src=' + srcURL + '>');
 }
 
 function callGiphyAPIWithSearchTerm(searchTerm) {
+    // use the giphyURLWithSearchTerm function to customize the url below
+    var giphyURL = giphyURLWithSearchTerm(searchTerm);
+    console.log(giphyURL);
     $.ajax({
-      url: "https://api.giphy.com/v1/stickers/search?q=dog&api_key=dc6zaTOxFJmzC",
+      url: giphyURL,
       method: "GET",
       success: function(response) {
-           // Log the whole response to the console
-        //console.log(response);
-           // Log the first image of the data to the console
-           //console.log(response.data[0].url);
-           // Log the "type" property of the first image object to the console
-           //console.log(response.data[0].type);
-           // Log the "title" property of the first image object to the console
-           console.log(response.data[0].title);
+           console.log("we made it");
+           var url = response.data[0].images.original.url;
+           appendImageToBody(url); 
+                     
       },
     }); 
 }
-callGiphyAPIWithSearchTerm("dog");
+
+//Add a click handler below to call the function when the button is clicked
+$("button").click(function() {
+    var userInput = $("input").val();
+    callGiphyAPIWithSearchTerm(userInput);
+});
