@@ -8,7 +8,7 @@ function giphyURLWithSearchTerm(searchTerm) {
 function appendImageToBody(srcURL) {
     // write a function that will append an <img> to the body with the
     // URL provided in the parameters
-    $('body').append('<img src=' + srcURL + '>');
+    $('body').append('<img src=' + srcURL + '>'); 
 }
 
 function callGiphyAPIWithSearchTerm(searchTerm) {
@@ -20,9 +20,16 @@ function callGiphyAPIWithSearchTerm(searchTerm) {
       method: "GET",
       success: function(response) {
            console.log("we made it");
-           var url = response.data[0].images.original.url;
+          if (response.data.length > 10) {
+           var maximum = 10;
+           } else {
+               var maximum = response.data.length;
+           }
+           for (var i = 0; i < maximum; i++) {
+           var url = response.data[i].images.original.url;
            appendImageToBody(url); 
-                     
+           }
+          
       },
     }); 
 }
