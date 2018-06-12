@@ -1,3 +1,4 @@
+/* global $ */
 function giphyURLWithSearchTerm(searchTerm) {
     // write a function that will return a url for the giphy API with
     // the searchTerm provided in the parameters
